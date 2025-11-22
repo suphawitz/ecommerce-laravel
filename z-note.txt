@@ -1,0 +1,2 @@
+    docker compose exec app php artisan key:generate
+        ใช้เพื่อสร้าง APP_KEY ในไฟล์ .env เพื่อเพิ่มความปลอดภับในการใช้งานมากขึ้นว่าเป็นของเครื่องเรา
