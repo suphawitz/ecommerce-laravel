@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.3 # ปักหมุดเวอร์ชัน
+    container_name: ecommerce-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'ecommerce_db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - "33062:3306" # เปลี่ยน port หนีโปรเจกต์เก่า (33061 -> 33062)
+    networks:
+      - ecommerce-net
+
+  pma:
+    image: phpmyadmin:5.2.1
+    container_name: ecommerce-pma
+    restart: unless-stopped
+    ports:
+      - "8082:80" # เปลี่ยน port หนีโปรเจกต์เก่า (8081 -> 8082)
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 'root'
+    networks:
+      - ecommerce-net
+    depends_on:
+      - db
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - ecommerce-net
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:1.27
+    container_name: ecommerce-nginx
+    restart: unless-stopped
+    ports:
+      - "8001:80" # เปลี่ยน port หนีโปรเจกต์เก่า (8000 -> 8001)
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - ecommerce-net
+    depends_on:
+      - app
+
+networks:
+  ecommerce-net:
+    driver: bridge
