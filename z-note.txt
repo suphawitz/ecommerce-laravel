@@ -1,2 +1,10 @@
     docker compose exec app php artisan key:generate
         ใช้เพื่อสร้าง APP_KEY ในไฟล์ .env เพื่อเพิ่มความปลอดภับในการใช้งานมากขึ้นว่าเป็นของเครื่องเรา
+
+    ------- Database -------
+    docker compose exec app php artisan make:model Product -m
+        สร้าง model สำหรับสร้าง database ใน ฐานข้อมูลของเรา
+        -m ย่อมาจาก --migration คือสั่งให้สร้างไฟล์ Migration ให้ด้วย
+    
+    docker compose exec app php artisan migrate
+        รัน Migration (สร้างตารางจริง) หลังจากสร้าง model และ migration มาแล้ว
