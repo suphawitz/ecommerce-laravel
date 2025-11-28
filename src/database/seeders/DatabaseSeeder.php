@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // เพิ่มคำสั่งเรียกใช้ ProductSeeder ตรงนี้
+        $this->call([
+            ProductSeeder::class,
+        ]);
     }
 }

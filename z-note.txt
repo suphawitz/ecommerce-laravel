@@ -1,6 +1,7 @@
     docker compose exec app php artisan key:generate
         ใช้เพื่อสร้าง APP_KEY ในไฟล์ .env เพื่อเพิ่มความปลอดภับในการใช้งานมากขึ้นว่าเป็นของเครื่องเรา
 
+
     ------- Database -------
     docker compose exec app php artisan make:model Product -m
         สร้าง model สำหรับสร้าง database ใน ฐานข้อมูลของเรา
@@ -8,3 +9,15 @@
     
     docker compose exec app php artisan migrate
         รัน Migration (สร้างตารางจริง) หลังจากสร้าง model และ migration มาแล้ว
+
+    docker compose exec app php artisan migrate:fresh --seed
+        ลบตารางทั้งหมดทิ้งและเพิ่มข้อมูลใน seeder เพิ่มขึ้นมา
+    
+    ------- Controller -------
+    docker compose exec app php artisan make:controller ProductController
+        เป็นการสร้าง controller ขึ้นมา
+
+
+    ------- Seeder -------
+    docker compose exec app php artisan make:seeder ProductSeeder
+        ระบบที่ใช้เพิ่มข้อมูลปลอม (Dummy Data) เข้าไปในฐานข้อมูลเรียกว่า Database Seeding 🌱 ครับ (การเพาะเมล็ดพันธุ์ข้อมูลนั่นเอง)
