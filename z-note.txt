@@ -14,7 +14,7 @@
         ลบตารางทั้งหมดทิ้งและเพิ่มข้อมูลใน seeder เพิ่มขึ้นมา
     
     ------- Controller -------
-    docker compose exec app php artisan make:controller ProductController
+    docker compose exec app php artisan make:controller [ชื่อ controller]
         เป็นการสร้าง controller ขึ้นมา
 
 
